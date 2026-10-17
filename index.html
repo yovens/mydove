@@ -1,0 +1,454 @@
+<title>Pour My Dove</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italiana&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: une colonne, un ciel qui passe de la nuit à l'aube au fil du défilement — encre bleue, nacre, lueur de lanterne */
+:root {
+  --night: #0b1222;
+  --dusk: #1c2340;
+  --dawn: #5a3550;
+  --pearl: #eef0f6;
+  --dove: #c9cfdd;
+  --glow: #ffb45e;
+  --blush: #eaa6a2;
+  --ink: #232a3d;
+  --f-script: "Great Vibes", "Snell Roundhand", cursive;
+  --f-display: "Italiana", "Didot", Georgia, serif;
+  --f-body: "Cormorant Garamond", Garamond, Georgia, serif;
+  --f-ui: "Jost", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--night); color: var(--pearl); font-family: var(--f-ui); font-size: 16px; overflow-x: hidden; }
+
+.sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.sky .layer { position: absolute; inset: 0; }
+.sky .l-night { background: radial-gradient(120% 80% at 50% 0%, var(--dusk), var(--night) 70%); }
+.sky .l-dawn { background: linear-gradient(to top, #b8707a 0%, var(--dawn) 35%, var(--dusk) 80%); opacity: 0; }
+#stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+main, footer { position: relative; z-index: 1; }
+
+section {
+  min-height: 100vh; display: grid; place-items: center; text-align: center;
+  padding-block: 90px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.kicker { font-size: 12px; letter-spacing: .34em; text-transform: uppercase; color: var(--glow); margin: 0 0 12px; }
+.title { font-family: var(--f-display); font-weight: 400; font-size: clamp(32px, 8vw, 54px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.lead { font-family: var(--f-body); font-style: italic; font-size: clamp(19px, 4.6vw, 23px); color: var(--dove); max-width: 34ch; margin: 14px auto 0; line-height: 1.5; }
+
+/* ---------- Colombe (SVG) ---------- */
+.dove { width: 120px; height: 80px; overflow: visible; }
+.dove .body { fill: var(--pearl); }
+.dove .wing { fill: #fdfdff; transform-origin: 62px 42px; transform-box: view-box; animation: flap .55s ease-in-out infinite alternate; }
+.dove .wing.back { fill: var(--dove); animation-delay: -.2s; }
+.dove .eye { fill: var(--ink); }
+.dove .beak { fill: var(--glow); }
+@keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(-.55); } }
+
+/* ---------- Accueil ---------- */
+.hero { align-content: center; gap: 8px; }
+.hero .dove { width: 96px; margin: 0 auto 6px; animation: hover 3s ease-in-out infinite; }
+@keyframes hover { 50% { transform: translateY(-10px); } }
+.name {
+  font-family: var(--f-script); font-weight: 400; margin: 0;
+  font-size: clamp(84px, 24vw, 190px); line-height: 1;
+  color: var(--pearl);
+  text-shadow: 0 0 34px rgba(238, 240, 246, .35);
+}
+.date-badge {
+  display: inline-flex; gap: 14px; align-items: center; margin: 10px auto 0;
+  font-family: var(--f-display); font-size: clamp(18px, 4.6vw, 24px); letter-spacing: .14em; color: var(--dove);
+}
+.date-badge::before, .date-badge::after { content: ""; width: 34px; height: 1px; background: var(--dove); opacity: .6; }
+.today { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--glow); margin: 12px 0 0; min-height: 1em; }
+.hint { margin-top: 54px; font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--dove); display: grid; justify-items: center; gap: 12px; }
+.hint i { width: 1px; height: 46px; background: linear-gradient(var(--pearl), transparent); animation: drip 2.4s ease-in-out infinite; }
+@keyframes drip { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* ---------- Messager ---------- */
+.messenger { align-content: center; gap: 30px; }
+.carrier {
+  position: relative; width: 200px; height: 170px; margin: 0 auto; border: 0; background: none; cursor: pointer; padding: 0;
+  animation: hover 3s ease-in-out infinite;
+}
+.carrier .dove { width: 170px; height: 113px; position: absolute; left: 15px; top: 0; transition: transform 1.4s cubic-bezier(.5,0,.2,1), opacity 1.4s; }
+.mini-scroll {
+  position: absolute; left: 84px; top: 92px; width: 22px; height: 52px; border-radius: 4px;
+  background: linear-gradient(90deg, #d9c9a8, #f6ecd6 45%, #d9c9a8);
+  box-shadow: 0 6px 14px rgba(0,0,0,.4);
+  transition: transform 1s cubic-bezier(.5,0,.75,0), opacity 1s;
+}
+.mini-scroll::after { content: ""; position: absolute; left: -3px; right: -3px; top: 22px; height: 7px; background: var(--blush); border-radius: 2px; }
+.carrier:focus-visible { outline: 2px solid var(--glow); outline-offset: 10px; border-radius: 20px; }
+.tap { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--glow); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .45; } }
+.messenger.sent .carrier { animation: none; }
+.messenger.sent .carrier .dove { transform: translate(60vw, -70vh) rotate(-12deg) scale(.6); opacity: 0; }
+.messenger.sent .mini-scroll { transform: translateY(70px) rotate(90deg); opacity: 0; }
+.messenger.sent .tap { animation: none; opacity: 0; }
+
+/* ---------- Le parchemin ---------- */
+.letter-scene { align-content: start; }
+.scroll { width: min(660px, 100%); margin: 0 auto; }
+.rod {
+  height: 22px; border-radius: 11px; margin-inline: -14px;
+  background: linear-gradient(#f3e4c4, #c8b088 60%, #a88f66);
+  box-shadow: 0 8px 18px rgba(0,0,0,.45);
+  position: relative; z-index: 2;
+}
+.sheet {
+  height: 0; overflow: hidden;
+  background: linear-gradient(90deg, #efe2c8, #fbf4e6 12%, #fbf4e6 88%, #efe2c8);
+  color: var(--ink);
+  transition: height 2.4s cubic-bezier(.45,.05,.25,1);
+  text-align: left;
+}
+.sheet-inner { padding: clamp(30px, 7vw, 60px) clamp(22px, 7vw, 58px); }
+.sheet .greet { font-family: var(--f-script); font-size: clamp(42px, 10vw, 58px); margin: 0 0 18px; color: #4b3a5c; line-height: 1.1; }
+.sheet p.l { font-family: var(--f-body); font-size: clamp(19px, 4.7vw, 22px); line-height: 1.65; margin: 0 0 22px; max-width: 60ch; font-weight: 500; }
+.sheet p.l:first-letter { }
+.sheet .sign { font-family: var(--f-body); font-style: italic; font-size: clamp(20px, 5vw, 23px); text-align: right; margin: 34px 0 0; color: #4b3a5c; line-height: 1.5; }
+.sheet .orn { display: block; margin: 26px auto 0; width: 64px; opacity: .5; }
+
+/* ---------- Trois ans ---------- */
+.years { align-content: center; gap: 46px; }
+.track { display: grid; gap: 34px; width: min(760px, 100%); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.year { display: grid; gap: 14px; justify-items: center; }
+.year .frame {
+  width: 100%; max-width: 100%; aspect-ratio: 4 / 5;
+  border-radius: 999px 999px 14px 14px;
+  border: 1px solid rgba(238,240,246,.35);
+  padding: 8px;
+}
+.year .frame > div {
+  width: 100%; height: 100%; border-radius: 999px 999px 10px 10px; overflow: hidden;
+  background: var(--g); display: grid; place-items: center;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(238,240,246,.7);
+}
+.year .frame img { width: 100%; height: 100%; object-fit: cover; }
+.year .num { font-family: var(--f-display); font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: var(--glow); }
+.year .cap { font-family: var(--f-body); font-style: italic; font-size: 21px; color: var(--pearl); margin: 0; }
+
+/* ---------- Lanternes ---------- */
+.wishes { align-content: center; gap: 40px; }
+.lanterns { display: flex; flex-wrap: wrap; justify-content: center; gap: 26px 22px; width: min(720px, 100%); }
+.lantern {
+  border: 0; background: none; padding: 0; cursor: pointer; color: var(--pearl);
+  display: grid; justify-items: center; gap: 12px; width: 92px;
+  font-family: var(--f-ui); font-size: 13px; letter-spacing: .08em;
+}
+.lantern .shape {
+  width: 54px; height: 70px; position: relative;
+  border-radius: 40% 40% 18% 18% / 30% 30% 14% 14%;
+  background: radial-gradient(ellipse at 50% 72%, #fff3c4 0 14%, var(--glow) 42%, #d9622f 100%);
+  box-shadow: 0 0 26px rgba(255,180,94,.55), 0 0 60px rgba(255,140,60,.25);
+  animation: sway 3.2s ease-in-out infinite;
+}
+.lantern:nth-child(2n) .shape { animation-delay: -1.1s; }
+.lantern:nth-child(3n) .shape { animation-delay: -2s; }
+.lantern .shape::before { content: ""; position: absolute; left: 22%; right: 22%; top: 0; height: 2px; background: rgba(90,40,20,.4); }
+.lantern .shape::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: -3px; height: 4px; border-radius: 2px; background: #6b3a22; }
+@keyframes sway { 50% { transform: translateY(-5px) rotate(2deg); } }
+.lantern:focus-visible { outline: 2px solid var(--glow); outline-offset: 6px; border-radius: 8px; }
+.lantern.up { pointer-events: none; }
+.lantern.up .shape { animation: rise 6s cubic-bezier(.3,0,.6,1) forwards; }
+.lantern.up .lbl { opacity: 0; transition: opacity .6s; }
+@keyframes rise {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  30% { transform: translate(10px,-30vh) scale(.8); }
+  60% { transform: translate(-14px,-65vh) scale(.55); opacity: .9; }
+  100% { transform: translate(8px,-110vh) scale(.3); opacity: 0; }
+}
+.sent-list { font-family: var(--f-body); font-style: italic; font-size: clamp(20px, 5vw, 24px); color: var(--pearl); min-height: 1.6em; margin: 0; max-width: 36ch; line-height: 1.5; text-wrap: balance; }
+.sent-list b { color: var(--glow); font-weight: 500; }
+
+/* ---------- Final ---------- */
+.finale { align-content: center; gap: 18px; }
+.finale .big { font-family: var(--f-script); font-size: clamp(56px, 15vw, 120px); line-height: 1.05; margin: 0; text-shadow: 0 0 30px rgba(255,220,200,.4); }
+.finale .small { font-family: var(--f-display); font-size: clamp(20px, 5vw, 28px); letter-spacing: .1em; margin: 0; color: var(--pearl); }
+.finale .keep { font-family: var(--f-body); font-style: italic; font-size: 20px; color: var(--dove); margin: 18px auto 0; max-width: 32ch; line-height: 1.5; }
+.flock { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+.flock .dove { position: absolute; left: -140px; animation: cross var(--d) linear forwards; }
+@keyframes cross { to { transform: translate(calc(100vw + 280px), var(--dy)) scale(var(--s)); } }
+
+footer { text-align: center; padding-block: 0 40px; font-size: 12px; letter-spacing: .16em; color: var(--dove); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
+</style>
+
+<div class="sky" aria-hidden="true"><div class="layer l-night"></div><div class="layer l-dawn" id="dawn"></div></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<template id="doveTpl">
+  <svg class="dove" viewBox="0 0 120 80" aria-hidden="true">
+    <path class="wing back" d="M56 42 C58 20, 72 8, 90 4 C82 18, 78 30, 70 44 Z"/>
+    <path class="body" d="M20 47 C34 32, 66 31, 86 40 C92 34, 102 32, 110 37 C114 39, 116 41, 118 42 C113 43, 108 44, 104 47 C98 60, 66 66, 44 59 C34 56, 26 55, 6 62 C12 54, 15 50, 20 47 Z"/>
+    <path class="beak" d="M117 41 L123 43 L117 44 Z"/>
+    <circle class="eye" cx="106" cy="39" r="1.8"/>
+    <path class="wing" d="M48 44 C50 18, 66 4, 88 0 C80 16, 74 30, 66 46 Z"/>
+  </svg>
+</template>
+
+<main>
+  <section class="hero">
+    <div data-dove></div>
+    <p class="kicker">Pour toi</p>
+    <h1 class="name" id="name">My Dove</h1>
+    <p class="date-badge" id="dateBadge">22 décembre</p>
+    <p class="today" id="today"></p>
+    <div class="hint" aria-hidden="true"><span>Descends lentement</span><i></i></div>
+  </section>
+
+  <section class="messenger" id="messenger">
+    <div>
+      <p class="kicker">Un message</p>
+      <h2 class="title">Une colombe t'apporte quelque chose</h2>
+      <p class="lead">Trois ans à tes côtés, et jamais je ne t'avais offert de cadeau. Le voici.</p>
+    </div>
+    <button class="carrier" id="carrier" aria-label="Recevoir le message">
+      <span class="mini-scroll"></span>
+      <span data-dove></span>
+    </button>
+    <p class="tap">Touche la colombe</p>
+  </section>
+
+  <div id="story" hidden>
+    <section class="letter-scene" id="letter">
+      <div class="scroll">
+        <div class="rod"></div>
+        <div class="sheet" id="sheet">
+          <div class="sheet-inner">
+            <p class="greet" id="greet"></p>
+            <div id="body"></div>
+            <p class="sign" id="sign"></p>
+            <svg class="orn" viewBox="0 0 64 12" aria-hidden="true"><path d="M2 6 H26 M38 6 H62" stroke="#4b3a5c" stroke-width="1"/><circle cx="32" cy="6" r="3" fill="none" stroke="#4b3a5c"/></svg>
+          </div>
+        </div>
+        <div class="rod"></div>
+      </div>
+    </section>
+
+    <section class="years" id="years">
+      <div>
+        <p class="kicker">Trois ans</p>
+        <h2 class="title">Ce que nous avons été</h2>
+      </div>
+      <div class="track" id="track"></div>
+    </section>
+
+    <section class="wishes" id="wishes">
+      <div>
+        <p class="kicker">Mes vœux pour toi</p>
+        <h2 class="title">Laisse-les monter vers le ciel</h2>
+        <p class="lead">Touche chaque lanterne pour la libérer.</p>
+      </div>
+      <div class="lanterns" id="lanterns"></div>
+      <p class="sent-list" id="sentList" aria-live="polite"></p>
+    </section>
+
+    <section class="finale" id="finale" hidden>
+      <p class="kicker">22 décembre</p>
+      <p class="big" id="finName">Joyeux anniversaire</p>
+      <p class="small" id="finSmall"></p>
+      <p class="keep" id="keep"></p>
+    </section>
+  </div>
+</main>
+<footer>Écrit pour toi, ligne par ligne</footer>
+<div class="flock" id="flock" aria-hidden="true"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* =========================================================
+   ✏️  PERSONNALISE ICI
+   ========================================================= */
+const CONFIG = {
+  name: "My Dove",
+  birthday: { month: 12, day: 22 },
+  greeting: "My Dove,",
+  letter: [
+    "Pendant trois ans, j'ai partagé ma vie avec toi. Trois ans de rires, de rêves, de silences qui disaient tout. Et pendant tout ce temps, je ne t'ai jamais offert de cadeau. Toi, tu l'as fait pour moi. Je ne l'ai jamais oublié.",
+    "Alors aujourd'hui, c'est mon tour. Ce n'est pas un objet qu'on range dans un tiroir. C'est un morceau de moi, écrit ligne par ligne, avec tout ce que je sais faire et tout ce que je ressens.",
+    "La vie nous a menés sur des chemins différents, mais une partie de moi t'appartiendra toujours. Je suis fier de ce qu'on a été, et reconnaissant qu'on soit restés en paix, avec autant de respect et de tendresse l'un pour l'autre.",
+    "Je te souhaite une vie pleine d'amour. Un amour qui te respecte, qui te protège et qui te fait sourire chaque matin. Je te souhaite de réussir tout ce que tu entreprends, de bâtir un foyer chaleureux, et d'avoir des enfants qui auront la chance immense d'avoir une mère comme toi.",
+    "Garde cette page. Elle est à toi, pour toujours. Le jour où tu auras besoin de te rappeler à quel point tu as compté pour quelqu'un, reviens ici.",
+    "Joyeux anniversaire, My Dove. Vole haut, vole loin."
+  ],
+  signature: "Avec tout ce que j'ai de plus sincère,<br>Ti_Mouche",
+  // Remplace "photo" par le chemin de ton image (ex: "photos/annee1.jpg"), ou laisse vide
+  years: [
+    { label: "Année 1", caption: "Le début de nous",      photo: "2.png" },
+    { label: "Année 2", caption: "Ce qu'on a construit",  photo: "3.jpg" },
+    { label: "Année 3", caption: "Ce qui restera",        photo: "4.png" }
+  ],
+  wishes: [
+    { word: "L'amour",   phrase: "un amour vrai qui te choisit chaque jour" },
+    { word: "La réussite", phrase: "la réussite dans tout ce que tu touches" },
+    { word: "Un foyer",  phrase: "un foyer chaud et paisible" },
+    { word: "Des enfants", phrase: "des enfants qui te ressemblent" },
+    { word: "La paix",   phrase: "la paix dans ton cœur" },
+    { word: "Le bonheur", phrase: "un bonheur qui dure" }
+  ],
+  finale: "Ce souvenir est à toi. Il ne s'efface pas, il ne se perd pas. Comme ce qu'on a vécu."
+};
+/* ========================================================= */
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hasGsap = !!window.gsap && !!window.ScrollTrigger;
+if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+const tpl = document.getElementById("doveTpl");
+const makeDove = () => tpl.content.firstElementChild.cloneNode(true);
+document.querySelectorAll("[data-dove]").forEach(el => el.replaceWith(makeDove()));
+
+/* ---- Étoiles ---- */
+(() => {
+  const c = document.getElementById("stars"), ctx = c.getContext("2d");
+  let w, h, d, stars = [], shoot = null;
+  function size() {
+    d = Math.min(devicePixelRatio || 1, 2);
+    w = c.width = innerWidth * d; h = c.height = innerHeight * d;
+    stars = Array.from({ length: Math.round(innerWidth * innerHeight / 3500) }, () => ({
+      x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 1.3 + .3) * d,
+      p: Math.random() * Math.PI * 2, s: .5 + Math.random() * 1.5
+    }));
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    const fade = 1 - (window.__dawn || 0) * .75;
+    for (const s of stars) {
+      const a = (.35 + .65 * Math.abs(Math.sin(s.p + t / 1000 * s.s))) * fade;
+      ctx.fillStyle = `rgba(238,240,246,${a})`;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+    if (!shoot && Math.random() < .004) shoot = { x: Math.random() * w * .7, y: Math.random() * h * .4, l: 0 };
+    if (shoot) {
+      shoot.l += 14 * d;
+      const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x + shoot.l, shoot.y + shoot.l * .4);
+      g.addColorStop(0, "rgba(238,240,246,0)"); g.addColorStop(1, `rgba(238,240,246,${.8 * fade})`);
+      ctx.strokeStyle = g; ctx.lineWidth = 1.5 * d;
+      ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x + shoot.l, shoot.y + shoot.l * .4); ctx.stroke();
+      if (shoot.l > 260 * d) shoot = null;
+    }
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  size(); requestAnimationFrame(draw); addEventListener("resize", size);
+})();
+
+/* ---- Contenu ---- */
+document.getElementById("name").textContent = CONFIG.name;
+const months = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+document.getElementById("dateBadge").textContent = `${CONFIG.birthday.day} ${months[CONFIG.birthday.month - 1]}`;
+const now = new Date();
+if (now.getMonth() + 1 === CONFIG.birthday.month && now.getDate() === CONFIG.birthday.day)
+  document.getElementById("today").textContent = "C'est aujourd'hui";
+
+document.getElementById("greet").textContent = CONFIG.greeting;
+document.getElementById("body").innerHTML = CONFIG.letter.map(t => `<p class="l">${t}</p>`).join("");
+document.getElementById("sign").innerHTML = CONFIG.signature;
+
+const grads = ["linear-gradient(160deg,#2a3360,#0b1222)", "linear-gradient(160deg,#5a3550,#1c2340)", "linear-gradient(160deg,#b8707a,#5a3550)"];
+document.getElementById("track").innerHTML = CONFIG.years.map((y, i) => `
+  <figure class="year">
+    <div class="frame"><div style="--g:${grads[i % 3]}">${y.photo ? `<img src="${y.photo}" alt="${y.caption}">` : "Ta photo ici"}</div></div>
+    <span class="num">${y.label}</span>
+    <figcaption class="cap">${y.caption}</figcaption>
+  </figure>`).join("");
+
+document.getElementById("lanterns").innerHTML = CONFIG.wishes.map((w, i) =>
+  `<button class="lantern" data-i="${i}" aria-label="Libérer le vœu : ${w.word}"><span class="shape"></span><span class="lbl">${w.word}</span></button>`).join("");
+
+document.getElementById("finName").textContent = "Joyeux anniversaire";
+document.getElementById("finSmall").textContent = CONFIG.name;
+document.getElementById("keep").textContent = CONFIG.finale;
+
+/* ---- Intro ---- */
+if (hasGsap && !reduce) {
+  gsap.from(".hero .dove", { x: -200, y: 60, opacity: 0, duration: 1.6, ease: "power3.out" });
+  gsap.from("#name", { opacity: 0, y: 30, filter: "blur(14px)", duration: 1.8, ease: "power2.out", delay: .5 });
+  gsap.from(".hero .kicker, .date-badge, .today, .hint", { opacity: 0, y: 12, duration: 1, stagger: .2, delay: 1.3 });
+  gsap.from("#carrier", { x: -160, y: 80, opacity: 0, scrollTrigger: { trigger: "#messenger", start: "top bottom", end: "center center", scrub: 1 } });
+}
+
+/* ---- Le ciel s'éclaire vers l'aube ---- */
+function dawnTrigger() {
+  if (!hasGsap) return;
+  ScrollTrigger.create({
+    trigger: "#story", start: "top center", end: "bottom bottom", scrub: true,
+    onUpdate: s => { window.__dawn = s.progress; document.getElementById("dawn").style.opacity = s.progress; }
+  });
+}
+
+/* ---- La colombe livre la lettre ---- */
+let delivered = false;
+document.getElementById("carrier").addEventListener("click", () => {
+  if (delivered) return; delivered = true;
+  document.getElementById("messenger").classList.add("sent");
+  setTimeout(() => {
+    document.getElementById("story").hidden = false;
+    const sheet = document.getElementById("sheet");
+    document.getElementById("letter").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    setTimeout(() => {
+      sheet.style.height = sheet.scrollHeight + "px";
+      sheet.addEventListener("transitionend", () => { sheet.style.height = "auto"; if (hasGsap) ScrollTrigger.refresh(); }, { once: true });
+      if (reduce) sheet.style.height = "auto";
+    }, reduce ? 0 : 700);
+    setupStory();
+  }, reduce ? 0 : 1300);
+});
+
+function setupStory() {
+  if (!hasGsap) return;
+  dawnTrigger();
+  if (reduce) return;
+  gsap.utils.toArray(".sheet p.l, .sheet .sign").forEach((p, i) => {
+    gsap.from(p, { opacity: 0, y: 16, duration: 1.1, ease: "power2.out", delay: .9 + i * .35 });
+  });
+  gsap.utils.toArray(".year").forEach((el, i) => {
+    gsap.from(el, { opacity: 0, y: 70, duration: 1.2, ease: "power3.out", delay: i * .2,
+      scrollTrigger: { trigger: "#track", start: "top 82%" } });
+  });
+  gsap.from(".lantern", { opacity: 0, y: 40, duration: 1, stagger: .12,
+    scrollTrigger: { trigger: "#lanterns", start: "top 85%" } });
+}
+
+/* ---- Lanternes ---- */
+const released = [];
+document.getElementById("lanterns").addEventListener("click", e => {
+  const b = e.target.closest(".lantern");
+  if (!b || b.classList.contains("up")) return;
+  b.classList.add("up");
+  released.push(CONFIG.wishes[+b.dataset.i]);
+  const last = released[released.length - 1];
+  document.getElementById("sentList").innerHTML = `Je te souhaite <b>${last.phrase}</b>.`;
+  if (released.length === CONFIG.wishes.length) setTimeout(showFinale, reduce ? 0 : 1800);
+});
+
+function showFinale() {
+  document.getElementById("sentList").innerHTML = "Tous mes vœux sont partis vers toi.";
+  const f = document.getElementById("finale");
+  f.hidden = false;
+  if (hasGsap) ScrollTrigger.refresh();
+  f.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  if (reduce) return;
+  if (hasGsap) gsap.from("#finale > *", { opacity: 0, y: 26, filter: "blur(8px)", duration: 1.4, stagger: .35, delay: .6 });
+  const flock = document.getElementById("flock");
+  for (let i = 0; i < 9; i++) {
+    setTimeout(() => {
+      const d = makeDove();
+      d.style.top = (15 + Math.random() * 60) + "vh";
+      d.style.setProperty("--d", (6 + Math.random() * 4) + "s");
+      d.style.setProperty("--dy", (-20 - Math.random() * 40) + "vh");
+      d.style.setProperty("--s", (.5 + Math.random() * .5).toFixed(2));
+      d.style.width = (60 + Math.random() * 60) + "px";
+      flock.appendChild(d);
+      setTimeout(() => d.remove(), 11000);
+    }, 600 + i * 450);
+  }
+}
+</script>
