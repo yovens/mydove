@@ -1,5 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1222">
 <title>Pour My Dove</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italiana&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
 <style>
@@ -179,8 +184,35 @@ footer { text-align: center; padding-block: 0 40px; font-size: 12px; letter-spac
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
 }
-</style>
 
+/* ---------- Ajustements téléphone ---------- */
+html, body { overflow-x: hidden; max-width: 100%; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
+html { -webkit-text-size-adjust: 100%; }
+button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+section { min-height: 100svh; }
+.hero, .messenger, .finale { min-height: 100svh; }
+.year .frame { max-width: 300px; }
+.track { justify-items: center; }
+img { max-width: 100%; display: block; }
+@media (max-width: 480px) {
+  section { padding-block: 64px; }
+  .name { font-size: clamp(64px, 22vw, 110px); }
+  .title { font-size: clamp(28px, 8.5vw, 38px); }
+  .rod { margin-inline: -6px; }
+  .sheet-inner { padding: 28px 20px; }
+  .sheet p.l { font-size: 19px; line-height: 1.6; }
+  .track { grid-template-columns: 1fr; gap: 40px; }
+  .year .frame { max-width: 240px; }
+  .lanterns { gap: 22px 10px; }
+  .lantern { width: 30%; min-width: 84px; }
+  .carrier { transform-origin: center; }
+  .messenger.sent .carrier .dove { transform: translate(40vw, -60vh) rotate(-12deg) scale(.5); }
+  .finale .big { font-size: clamp(48px, 14vw, 72px); }
+}
+</style>
+</head>
+<body>
 <div class="sky" aria-hidden="true"><div class="layer l-night"></div><div class="layer l-dawn" id="dawn"></div></div>
 <canvas id="stars" aria-hidden="true"></canvas>
 
@@ -452,3 +484,5 @@ function showFinale() {
   }
 }
 </script>
+</body>
+</html>
